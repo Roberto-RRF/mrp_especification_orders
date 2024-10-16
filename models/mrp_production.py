@@ -63,43 +63,61 @@ class MrpProduction(models.Model):
             to_produce_measure = production.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Ancho cm").name
             supply_measure = production.attr_line_ids[0].medida
 
-            print("Producto Resultante: "+str(to_produce_measure))
-            print("Materia prima: "+str(supply_measure))
-            print("Division: "+str(float(supply_measure)/float(to_produce_measure)))
-            print("Division entera: "+str(float(supply_measure)//float(to_produce_measure)))
-
-            lines_to_create=[]
             division_entera = int(float(supply_measure)//float(to_produce_measure))
-            if division_entera == 0:
-                division_entera += 1
+
             for cut_index in range(0, production.to_cut):
+                lines_to_create=[]
                 extra_lines = []
-                for i in range(division_entera):
-                    print("In cut index LINEE")
-                    print("Print #"+str(i))
+                print(division_entera)
+                if division_entera == 0:
+                    print("In division enters")
                     extra_lines.append((0,0,{
-                        'pos':i,
-                        'medida':float(supply_measure)/float(to_produce_measure),
+                        'pos':1,
+                        'medida':supply_measure,
                         'medir_en':'cms',
                         'kilos':20,
                         'destino':'cliente'
-                    }))
-
-                print("Modulo 1: "+str(float(supply_measure)%float(to_produce_measure)))
-                print("Modulo 2: "+str(float(to_produce_measure)%float(supply_measure)))
-                extra_lines.append((0,0,{
-                        'pos':float(to_produce_measure)//float(supply_measure) +1,
-                        'medida':str(float(to_produce_measure)%float(supply_measure)),
+                    }))                        
+                    
+                    extra_lines.append((0,0,{
+                        'pos':2,
+                        'medida':float(to_produce_measure) - float(supply_measure),
                         'medir_en':'cms',
                         'kilos':20,
                         'destino':'desperdicio'
-                }))
-                lines_to_create.append((0,0,{
+                    }))
+                    lines_to_create.append((0,0,{
                     'production_id': production.id,
                     'num': cut_index +1,
-                    'centro': 10,  # Assuming you want to keep the same centro
-                    'diametro': 5,  # Same measure for each cut
-                    #'destino': 'Some destination',  # You can assign a destination here
+                    'centro': 10, 
+                    'diametro': 5, 
                     'lines':extra_lines
-                }))
-            production.write({'cut_line_ids': lines_to_create})
+                    }))
+                    production.write({'cut_line_ids': lines_to_create})
+                    
+                else: 
+                    for i in range(division_entera):
+                        print("In cut index LINEE")
+                        print("Print #"+str(i))
+                        extra_lines.append((0,0,{
+                            'pos':i,
+                            'medida':float(supply_measure)/float(to_produce_measure),
+                            'medir_en':'cms',
+                            'kilos':20,
+                            'destino':'cliente'
+                        }))
+                    extra_lines.append((0,0,{
+                            'pos':float(supply_measure)//float(to_produce_measure) +1,
+                            'medida':str(float(supply_measure)%float(to_produce_measure)),
+                            'medir_en':'cms',
+                            'kilos':20,
+                            'destino':'desperdicio'
+                    }))
+                    lines_to_create.append((0,0,{
+                        'production_id': production.id,
+                        'num': cut_index +1,
+                        'centro': 10, 
+                        'diametro': 5,  
+                        'lines':extra_lines
+                    }))
+                    production.write({'cut_line_ids': lines_to_create})
