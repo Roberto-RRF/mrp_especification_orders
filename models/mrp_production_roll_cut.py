@@ -16,6 +16,7 @@ class MrpProductionRollCutLine(models.Model):
     cut_line_ids = fields.Many2one('mrp.production.roll.cut')
     pos = fields.Char("POS")
     medida = fields.Char("medida cm")
+    dif_medida = fields.Char("Ancho")
     medir_en = fields.Char("Medir en")
     kilos = fields.Integer("Kilos")
     destino = fields.Selection(selection=[

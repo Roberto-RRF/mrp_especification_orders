@@ -41,6 +41,7 @@
                                             <tree>
                                                 <field name="pos"/>
                                                 <field name="medida"/>
+                                                <field name="dif_medida"/>                                                
                                                 <field name="medir_en"/>
                                                 <field name="kilos"/>
                                                 <field name="destino"/>
