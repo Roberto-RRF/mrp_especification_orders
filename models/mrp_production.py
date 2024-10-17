@@ -91,7 +91,7 @@ class MrpProduction(models.Model):
                 lines.append((0,0,{
                     'pos':chr(pos_ascii),
                     'medida': str(sum) + ' - ' + str(supply_measure),
-                    'dif_medida': str(sum - supply_measure),
+                    'dif_medida': str(sum - str(supply_measure)),
                     'medir_en':'cms',
                     'kilos':9999,
                     'destino':'merma',
