@@ -27,7 +27,7 @@
                         </group>
                         <form>
                             <field name="cut_line_ids"  context="{'default_production_id': active_id}" domain="[('production_id', '=', active_id)]">
-                                <tree string="Lineas">
+                                <tree string="Lineas" create="0">
                                     <field name="num"/>
                                     <field name="centro"/>
                                     <field name="diametro"/>
@@ -39,6 +39,7 @@
                                             <field name="diametro"/>
                                             <field name="lines" widget="one2many">
                                             <tree>
+                                                <field name="pos"/>
                                                 <field name="medida"/>
                                                 <field name="medir_en"/>
                                                 <field name="kilos"/>
