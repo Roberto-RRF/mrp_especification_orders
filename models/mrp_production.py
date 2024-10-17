@@ -63,8 +63,6 @@ class MrpProduction(models.Model):
             final_product = production.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Ancho cm").name
             centro = production.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Centro").name
             diametro = production.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Diametro").name
-            print("Centro: "+centro)
-            print("Diametro: "+diametro)
             supply_measure = production.attr_line_ids[0].medida
 
             division_entera = int(float(supply_measure)//float(final_product))
@@ -81,7 +79,7 @@ class MrpProduction(models.Model):
                     lines.append((0,0,{
                         'pos':chr(pos_ascii),
                         'medida': str(sum_pas) + ' - ' + str(sum),
-                        'dif_medida': str(sum_pas - sum),
+                        'dif_medida': str(abs(sum_pas - sum)),
                         'medir_en':'cms',
                         'kilos':9999,
                         'destino':'cliente',
@@ -91,7 +89,7 @@ class MrpProduction(models.Model):
                 lines.append((0,0,{
                     'pos':chr(pos_ascii),
                     'medida': str(sum) + ' - ' + str(supply_measure),
-                    'dif_medida': str(sum - float(supply_measure)),
+                    'dif_medida': str(abs(sum - float(supply_measure))),
                     'medir_en':'cms',
                     'kilos':9999,
                     'destino':'merma',
