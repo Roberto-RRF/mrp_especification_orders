@@ -20,8 +20,8 @@ class MrpProduction(models.Model):
             self._compute_attr_lines()
         return result
 
-
-    @api.onchange('move_raw_ids')
+    @api.depends('raw_material_production_id', 'move_raw_ids')
+    @api.constrains('raw_material_production_id', 'move_raw_ids')
     def _compute_attr_lines(self):
         """Method to delete related attr lines and recalculate new ones."""
         for production in self:
@@ -49,6 +49,7 @@ class MrpProduction(models.Model):
                             'medida': medida.name,
 
                         })
+                        print(str(new_line))
                         new_lines.append(new_line)
 
                     production.write({'attr_line_ids': new_lines})
@@ -57,6 +58,7 @@ class MrpProduction(models.Model):
     @api.constrains('to_cut')
     @api.depends('to_cut')
     def _compute_cut_ids(self):
+        print("Calculando....")
         if not self.attr_line_ids:
             return
         for production in self:
