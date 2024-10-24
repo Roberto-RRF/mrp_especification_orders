@@ -57,6 +57,8 @@ class MrpProduction(models.Model):
     @api.constrains('to_cut')
     @api.depends('to_cut')
     def _compute_cut_ids(self):
+        if not self.attr_line_ids:
+            return
         for production in self:
             production.cut_line_ids.unlink()
 
@@ -65,7 +67,7 @@ class MrpProduction(models.Model):
             diametro = production.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Diametro").name
             supply_measure = production.attr_line_ids[0].medida
 
-            division_entera = int(float(supply_measure)//float(final_product))
+
 
             for cut_index in range(0, production.to_cut):
                 lines = []
