@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="worksheet_roll_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <!-- ASI SE PUEDE SACAR VALORES DEL DICCIONARIO DATA -->
+                        <!-- <t t-esc="titulo" /> -->
+                        <div class="row">
+                            <div class="col-7">
+                                <div><strong>Folio:</strong> <t t-esc="name"/> </div>
+                                <div><strong>Fecha:</strong> <t t-esc="date"/> </div>
+                                <div><strong>Bodega:</strong> <t t-esc="warehouse"/> </div>
+                                <div><strong>Estatus:</strong> <t t-esc="state"/> </div>
+                                <div><strong>Rollos a Cortar:</strong> <t t-esc="to_cut_rolls"/></div>
+                            </div>
+                            <div class="col-5">
+                                <span class="text-end">
+                                    <span t-esc="name" t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:350px;height:60px'}">Package barcode</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>Family</th>
+                                    <th>Subfamily</th>
+                                    <th>Type</th>
+                                    <th>Color</th>
+                                    <th>Weight (g)</th>
+                                    <th>Size (cm)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td t-esc="supply['family']"/>
+                                    <td t-esc="supply['subfamily']"/>
+                                    <td t-esc="supply['type']"/>
+                                    <td t-esc="supply['color']"/>
+                                    <td t-esc="supply['weight']"/>
+                                    <td t-esc="supply['size']"/>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>TIPO DE VENTA:   <t t-esc="sale_type"/></h3> 
+                        <t t-foreach="lines" t-as="line">
+                            <table class="table table-bordered" style="margin-top: 55px;">
+                                <thead>
+                                    <tr>
+                                        <th>Pasada: <t t-esc="line['num']"/></th>
+                                        <th>Centro: <t t-esc="line['center']"/></th>
+                                        <th>Diametro: <t t-esc="line['diameter']"/></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>POS: </th>
+                                        <th>Medida (cms): </th>
+                                        <th>Diferencia (cms): </th>
+                                        <th>Medir en: </th>
+                                        <th>Kilos</th>
+                                        <th>Destino</th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="line['cut_lines']" t-as="cut_line">
+                                    <tbody>
+                                        <tr>
+                                            <td t-esc="cut_line['pos']"/>
+                                            <td t-esc="cut_line['size']"/>
+                                            <td t-esc="cut_line['diff_size']"/>
+                                            <td t-esc="cut_line['measure_in']"/>
+                                            <td t-esc="cut_line['kilos']"/>
+                                            <td t-esc="cut_line['destiny']"/>
+                                        </tr>
+                                    </tbody> 
+                                </t>
+                            </table>
+                        </t>
+                        <h5>Observaciones: </h5>
+                        <t t-raw="product_comment" />
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_worksheet_roll_report" model="ir.actions.report">
+            <field name="name">Hoja de Trabajo Rollo</field>
+            <field name="model">mrp.production</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mrp_especification_orders.worksheet_roll_report</field>
+            <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_view_types">form</field>
+        </record>
+    </data>
+</odoo>

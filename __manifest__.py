@@ -11,6 +11,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/mrp_production_view.xml',
+        'report/work_sheet_roll_report.xml',
     ],
     'images': ['static/description/icon.png'],
     'installable': True,

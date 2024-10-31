@@ -1,4 +1,5 @@
 <odoo>
+
     <record id="view_mrp_production_form_inherit" model="ir.ui.view">
         <field name="name">mrp.production.form.inherit.especificacion</field>
         <field name="model">mrp.production</field>
@@ -6,52 +7,22 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@name='product_comments']" position="after">
                 <page string="Especificación">
-                        <h4>Rollo/Hoja a usar:</h4>
-                        <field name="attr_line_ids"  context="{'default_production_id': active_id}">
-                            <tree create="0" delete="0" editable="bottom" widget="one2many">
-                                <field name="familia"/>
-                                <field name="subfamilia"/>
-                                <field name="tipo"/>
-                                <field name="color"/>
-                                <field name="gramaje"/>
-                                <field name="medida"/>
-                            </tree>
-                        </field>
-
-                        <h4>Especificaciones de Corte:</h4>
-                        <group>
+                    <group>
                         <group>
                             <field name="to_cut"/>
+                            <field name="to_cut_rolls"/>
+                            <field name="sale_type"/>
                         </group>
-                        
-                        </group>
-                        <form>
-                            <field name="cut_line_ids"  context="{'default_production_id': active_id}" domain="[('production_id', '=', active_id)]">
-                                <tree string="Lineas" create="0">
-                                    <field name="num"/>
-                                    <field name="centro"/>
-                                    <field name="diametro"/>
-                                </tree>
-                                <form string="Linea">
-                                    <group>
-                                        <field name="num"/>
-                                            <field name="centro"/>
-                                            <field name="diametro"/>
-                                            <field name="lines" widget="one2many">
-                                            <tree>
-                                                <field name="pos"/>
-                                                <field name="medida"/>
-                                                <field name="dif_medida"/>                                                
-                                                <field name="medir_en"/>
-                                                <field name="kilos"/>
-                                                <field name="destino"/>
-                                            </tree>
-                                        </field>
-                                    </group>
-                                </form>
-                            </field>
-                        </form>
+                    </group>
                 </page>
+            </xpath>
+
+            <xpath expr="//button[@name='action_open_label_type']" position="after">
+                <button 
+                    name="action_print_work_sheet"
+                    type="object"
+                    string="Imprimir Hoja de Trabajo"
+                />
             </xpath>
         </field>
     </record>
