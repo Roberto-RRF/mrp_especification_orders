@@ -19,7 +19,7 @@
 
             <xpath expr="//button[@name='action_open_label_type']" position="after">
                 <button 
-                    name="action_print_work_sheet"
+                    name="action_open_work_sheet_wizard"
                     type="object"
                     string="Imprimir Hoja de Trabajo"
                 />

@@ -1,0 +1,70 @@
+<odoo>
+    <record id="view_mrp_production_wizard_form" model="ir.ui.view">
+        <field name="name">mrp.production.wizard.form</field>
+        <field name="model">mrp.production.wizard</field>
+        <field name="arch" type="xml">
+
+            <form string="Print Work Sheet">
+                <group>
+                    <field name="to_cut"/>
+                    <field name="to_cut_rolls"/>
+                    <field name="sale_type"/>
+                    <field name="source_product_id" string="Materia Prima"/>
+                    <field name="production_id" string="Orden de Producción"/>
+                </group>
+                <notebook>
+                    <page string="Productos Resultantes">
+                        <field name="resultant_products_ids">
+                            <tree string="Lines" create="0" editable="false" readonly="1">
+                                <field name="display_name" string="Producto"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Detalles de Manufactura">
+                        <form>
+                            <field name="production_line_ids">
+                                <!-- Tree view for MrpProductionLine -->
+                                <tree string="Líneas de Producción" create="0" edit="1">
+                                    <field name="pasada"/>
+                                    <field name="centro"/>
+                                    <field name="diametro"/>
+                                </tree>
+                                <!-- Form view for editing MrpProductionLine -->
+                                <form string="Detalle de Línea">
+                                    <group>
+                                        <field name="pasada"/>
+                                        <field name="centro"/>
+                                        <field name="diametro"/>
+                                        <field name="lines_details" widget="one2many">
+                                            <!-- Tree view for MrpProductionLineDetail -->
+                                            <tree string="Detalles de Línea" create="1" edit="1" delete="1">
+                                                <field name="pos"/>
+                                                <field name="medida"/>
+                                                <field name="diferencia"/>
+                                                <field name="medir_en"/>
+                                                <field name="kilos"/>
+                                                <field name="destino"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                            </field>
+                        </form>
+                    </page>
+
+                </notebook>
+                <footer>
+                    <button string="Imprimir" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mrp_production_wizard" model="ir.actions.act_window">
+        <field name="name">Print Work Sheet</field>
+        <field name="res_model">mrp.production.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
