@@ -12,6 +12,7 @@
         'security/ir.model.access.csv',
         'views/mrp_production_view.xml',
         'report/work_sheet_roll_report.xml',
+        'report/work_sheet_sheet_report.xml',
         'wizard/mrp_production_wizard_view.xml',
     ],
     'images': ['static/description/icon.png'],

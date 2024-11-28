@@ -9,9 +9,23 @@
                 <page string="Especificación">
                     <group>
                         <group>
-                            <field name="to_cut"/>
+                            <field name="is_roll" invisible="1"/>
+                            <!-- Variables Compartidas -->
                             <field name="to_cut_rolls"/>
                             <field name="sale_type"/>
+
+                            <!-- Variables de Rollos -->
+                            <field name="to_cut" invisible="not is_roll"/>
+                            
+                            <!-- Variables de Hojas -->
+                            <field name="millares_vendidos" invisible="is_roll"/>
+                            <field name="medida" invisible="is_roll"/>
+                            <field name="kilos" invisible="is_roll"/>
+                            <field name="destino" invisible="is_roll"/>
+                            <field name="empacar_en" invisible="is_roll"/>
+                            <field name="hojas_por_empaque" invisible="is_roll"/>
+                            <field name="tarimas" invisible="is_roll"/>
+
                         </group>
                     </group>
                 </page>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="worksheet_sheet_report">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-7">
+                                <div><strong>Folio:</strong> <t t-esc="name"/> </div>
+                                <div><strong>Fecha:</strong> <t t-esc="date"/> </div>
+                                <div><strong>Bodega:</strong> <t t-esc="warehouse"/> </div>
+                                <div><strong>Estatus:</strong> <t t-esc="state"/> </div>
+                                <div><strong>Rollos a Cortar:</strong> <t t-esc="to_cut_rolls"/></div>
+                            </div>
+                            <div class="col-5">
+                                <span class="text-end">
+                                    <span t-esc="name" t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:350px;height:60px'}">Package barcode</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>Family</th>
+                                    <th>Subfamily</th>
+                                    <th>Type</th>
+                                    <th>Color</th>
+                                    <th>Weight (g)</th>
+                                    <th>Size (cm)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td t-esc="supply['family']"/>
+                                    <td t-esc="supply['subfamily']"/>
+                                    <td t-esc="supply['type']"/>
+                                    <td t-esc="supply['color']"/>
+                                    <td t-esc="supply['weight']"/>
+                                    <td t-esc="supply['size']"/>
+                                </tr>
+                            </tbody>
+                        </table>  
+
+                                              
+                        <h3>TIPO DE VENTA:   <t t-esc="sale_type"/></h3> 
+                        <h4>Empaque:   <t t-esc="empacar_en"/></h4> 
+                        <h4>Millares vendidos:   <t t-esc="millares_vendidos"/></h4> 
+                        
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>CORRIDAS</th>
+                                    <th>ROLLOS POR CORRIDA</th>
+                                    <th>TARIMAS</th>
+                                    <th>HOJAS POR TARIMA</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td t-esc="to_cut"/>
+                                    <td t-esc="to_cut_rolls"/>
+                                    <td t-esc="tarimas"/>
+                                    <td t-esc="hojas_por_empaque"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>MILLARES</th>
+                                    <th>MEDIDA (CMS)</th>
+                                    <th>KILOS</th>
+                                    <th>DESTINO</th>
+                                    <th>EMPACAR EN</th>
+                                    <th>HOJAS POR EMPAQUE</th>
+                                    <th>CMS</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td t-esc="millares_vendidos"/>
+                                    <td t-esc="medida"/>
+                                    <td t-esc="kilos"/>
+                                    <td t-esc="destino"/>                                    <td t-esc="to_cut_rolls"/>
+                                    <td t-esc="empacar_en"/>
+                                    <td t-esc="hojas_por_empaque"/>
+                                    <td t-esc="millares_vendidos"/>
+                                </tr>
+                            </tbody>
+                        </table>
+          
+
+                        <h5>Observaciones: </h5>
+                        <t t-raw="product_comment" />
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_worksheet_sheet_report" model="ir.actions.report">
+            <field name="name">Hoja de Trabajo Hoja</field>
+            <field name="model">mrp.production</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">mrp_especification_orders.worksheet_sheet_report</field>
+            <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_view_types">form</field>
+        </record>
+    </data>
+</odoo>

@@ -15,6 +15,16 @@ class MrpProductionWizard(models.TransientModel):
     resultant_products_ids = fields.Many2many('product.product', string="Resultant Products", readonly=True)
     source_product_id = fields.Many2one('product.product', string='Source Product')
     production_line_ids = fields.One2many('mrp.production.line', 'wizard_id', string="Production Lines")
+    is_roll = fields.Boolean("Es Rollo")
+
+    # Variables de Hoja
+    millares_vendidos = fields.Char("Millares Vendidos")
+    medida = fields.Char("Medida (cms)")
+    kilos = fields.Char("Kilos")
+    destino = fields.Char("Destino")
+    empacar_en = fields.Char("Empacar en")
+    hojas_por_empaque = fields.Char("Hojas por empaque")
+    tarimas = fields.Char("Tarimas")
 
     @api.model
     def default_get(self, fields):
@@ -114,23 +124,35 @@ class MrpProductionWizard(models.TransientModel):
                     'size': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Ancho cm").name
                 }
                 break
-        for cut_index in self.production_line_ids:
-            cut_lines = []
+        if self.is_roll:
+            for cut_index in self.production_line_ids:
+                cut_lines = []
 
-            for cut_index_details in cut_index.lines_details:
-                cut_lines.append({
-                    'pos':cut_index_details.pos,
-                    'size': cut_index_details.medida,
-                    'diff_size': cut_index_details.diferencia,
-                    'measure_in':cut_index_details.medir_en,
-                    'kilos':cut_index_details.kilos,
-                    'destiny':cut_index_details.destino,
+                for cut_index_details in cut_index.lines_details:
+                    cut_lines.append({
+                        'pos':cut_index_details.pos,
+                        'size': cut_index_details.medida,
+                        'diff_size': cut_index_details.diferencia,
+                        'measure_in':cut_index_details.medir_en,
+                        'kilos':cut_index_details.kilos,
+                        'destiny':cut_index_details.destino,
+                    })
+                data['lines'].append({
+                    'num': cut_index.pasada,
+                    'center': cut_index.centro, 
+                    'diameter': cut_index.diametro,  
+                    'cut_lines':cut_lines
                 })
-            data['lines'].append({
-                'num': cut_index.pasada,
-                'center': cut_index.centro, 
-                'diameter': cut_index.diametro,  
-                'cut_lines':cut_lines
-            })
 
-        return self.env.ref('mrp_especification_orders.action_worksheet_roll_report').report_action([], data=data)
+            return self.env.ref('mrp_especification_orders.action_worksheet_roll_report').report_action([], data=data)
+        else:
+            data['to_cut']= self.to_cut
+            data['tarimas']= self.tarimas
+            data['hojas_por_empaque']= self.hojas_por_empaque
+            data['tarimas']= self.tarimas
+            data['millares_vendidos']= self.millares_vendidos
+            data['medida']= self.medida
+            data['kilos']= self.kilos
+            data['destino']= self.destino
+            data['empacar_en']= self.empacar_en
+            return self.env.ref('mrp_especification_orders.action_worksheet_sheet_report').report_action([], data=data)
