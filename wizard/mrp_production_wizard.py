@@ -121,7 +121,10 @@ class MrpProductionWizard(models.TransientModel):
                     'type': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Tipo").name,
                     'color': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Color").name,
                     'weight':move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Gramos").name,
-                    'size': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Ancho cm").name
+                    'size': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Ancho cm").name,
+                    'centro': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Centro").name,
+                    'diametro': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Diametro").name,
+                    'certificado': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Certificado").name,
                 }
                 break
         if self.is_roll:

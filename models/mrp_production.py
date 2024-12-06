@@ -5,8 +5,11 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     # Variables Compartidas
-    to_cut_rolls = fields.Integer("Rollos a Cortar")
-    sale_type = fields.Char("Tipo de Venta")
+    to_cut_rolls = fields.Integer("Rollos a Cortar", compute="_compute_to_cut_rolls")
+    sale_type = fields.Selection([
+        ('exact', 'Cantidad Exacta'),
+        ('complete', 'Rollo Completo'),
+    ], string ="Tipo de Venta", default="complete")
     
     # Variables de Rollo
     to_cut = fields.Integer("Numero de Pasadas")
@@ -19,7 +22,12 @@ class MrpProduction(models.Model):
     empacar_en = fields.Char("Empacar en")
     hojas_por_empaque = fields.Char("Hojas por empaque")
     tarimas = fields.Char("Tarimas")
-
+    
+    tarimas_iguales = fields.Boolean("Todas las tarimas son iguales", default=True)
+    detalles_tarimas = fields.Many2many(
+        'mrp.production.detalles.tarima',
+        string="Detalles Tarimas"
+    )
     is_roll = fields.Boolean("Es rollo", compute="_compute_is_roll", store=False)
 
     @api.depends('product_id')
@@ -30,6 +38,14 @@ class MrpProduction(models.Model):
                 record.is_roll = True
             else:
                 record.is_roll = False
+
+    @api.depends('move_raw_ids')
+    def _compute_to_cut_rolls(self):
+        suma = 0
+        for record in self:
+            for move in record.move_raw_ids:
+                suma+= move.rollos_promedio
+            record.to_cut_rolls = suma
 
     def action_open_work_sheet_wizard(self):
         resultant_products = self.product_id | self.move_finished_ids.mapped('product_id')
@@ -80,3 +96,9 @@ class MrpProduction(models.Model):
                 'resultant_sizes':resultant_sizes
             },
         }
+    
+class DestallesTarima(models.Model):
+    _name = 'mrp.production.detalles.tarima'
+    _description = 'Detalles Tarimas'
+
+    name = fields.Char(string="Name")

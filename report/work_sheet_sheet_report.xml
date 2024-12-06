@@ -85,7 +85,7 @@
                                     <td t-esc="millares_vendidos"/>
                                     <td t-esc="medida"/>
                                     <td t-esc="kilos"/>
-                                    <td t-esc="destino"/>                                    <td t-esc="to_cut_rolls"/>
+                                    <td t-esc="destino"/>                                    
                                     <td t-esc="empacar_en"/>
                                     <td t-esc="hojas_por_empaque"/>
                                     <td t-esc="millares_vendidos"/>

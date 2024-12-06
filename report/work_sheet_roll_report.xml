@@ -31,6 +31,9 @@
                                     <th>Color</th>
                                     <th>Weight (g)</th>
                                     <th>Size (cm)</th>
+                                    <th>Centro</th>
+                                    <th>Diametro</th>
+                                    <th>Certificado</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,6 +44,9 @@
                                     <td t-esc="supply['color']"/>
                                     <td t-esc="supply['weight']"/>
                                     <td t-esc="supply['size']"/>
+                                    <td t-esc="supply['centro']"/>
+                                    <td t-esc="supply['diametro']"/>
+                                    <td t-esc="supply['certificado']"/>
                                 </tr>
                             </tbody>
                         </table>

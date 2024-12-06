@@ -25,7 +25,9 @@
                             <field name="empacar_en" invisible="is_roll"/>
                             <field name="hojas_por_empaque" invisible="is_roll"/>
                             <field name="tarimas" invisible="is_roll"/>
-
+                            <field name="tarimas_iguales" invisible="is_roll"/>
+                            <field name="detalles_tarimas" invisible="tarimas_iguales == True" widget="many2many_tags" domain="[('id', '=', False)]"/>
+                            
                         </group>
                     </group>
                 </page>
@@ -37,6 +39,11 @@
                     type="object"
                     string="Imprimir Hoja de Trabajo"
                 />
+            </xpath>
+
+            <xpath expr="//field[@name='move_raw_ids']/tree/field[@name='product_id']" position="after">
+                <field name="peso_promedio" />
+                <field name="rollos_promedio" />
             </xpath>
         </field>
     </record>

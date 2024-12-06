@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_mrp_production_wizard,access_mrp_production_wizard,model_mrp_production_wizard,,1,1,1,1
 access_mrp_production_line,mrp.production.line,model_mrp_production_line,,1,1,1,1
 access_mrp_production_line_detail,mrp.production.line.detail,model_mrp_production_line_detail,,1,1,1,1
+access_mrp_production_detalles_tarima,mrp.production.detalles.tarima,model_mrp_production_detalles_tarima,,1,1,1,1
