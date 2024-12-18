@@ -22,6 +22,9 @@
                             </div>
                         </div>
 
+
+                        <h4>Componente:</h4>
+
                         <table class="table table-bordered" style="margin-top: 20px;">
                             <thead>
                                 <tr>
@@ -50,8 +53,46 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <h4> Operaciones: </h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operación </th>
+                                    <th>Centro de Trabajo</th>
+                                    <th>Producto </th>
+                                </tr>
+                            </thead>
+                            <t t-foreach="work" t-as="work_line">
+                                <tbody>
+                                    <tr>
+                                        <td t-esc="work_line['opetacion']"/>
+                                        <td t-esc="work_line['centro_trabajo']"/>
+                                        <td t-esc="work_line['producto']"/>
+                                    </tr>
+                                </tbody> 
+                            </t>
+                        </table>
+                        <h4>Empaquetado: </h4>
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>CORRIDAS</th>
+                                    <th>ROLLOS POR CORRIDA</th>
+                                    <th>TARIMAS</th>
+                                    <th>HOJAS POR TARIMA</th>
 
-                        <h3>TIPO DE VENTA:   <t t-esc="sale_type"/></h3> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td t-esc="to_cut"/>
+                                    <td t-esc="to_cut_rolls"/>
+                                    <td t-esc="tarimas"/>
+                                    <td t-esc="hojas_por_empaque"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4>TIPO DE VENTA:   <t t-esc="sale_type"/></h4> 
                         <t t-foreach="lines" t-as="line">
                             <table class="table table-bordered" style="margin-top: 55px;">
                                 <thead>
@@ -94,11 +135,14 @@
             </t>
         </template>
 
+
         <record id="action_worksheet_roll_report" model="ir.actions.report">
             <field name="name">Hoja de Trabajo Rollo</field>
             <field name="model">mrp.production</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">mrp_especification_orders.worksheet_roll_report</field>
+            <field name="report_file">mrp_especification_orders.worksheet_roll_report</field>
+            <field name="print_report_name">'Orden de trabajo - %s' % (object.name)</field>
             <field name="binding_model_id" ref="mrp.model_mrp_production"/>
             <field name="binding_view_types">form</field>
         </record>

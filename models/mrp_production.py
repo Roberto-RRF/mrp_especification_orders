@@ -67,7 +67,12 @@ class MrpProduction(models.Model):
             )
             # Append the names of the filtered values to resultant_sizes
             resultant_sizes.extend(ancho_cm_values.mapped('name'))
-
+        sale_type = {
+            'exact': 'Cantidad Exacta',
+            'complete': 'Rollo Completo',
+        }
+        print("\n\n\n")
+        print(sale_type[self.sale_type])
         return {    
             'name': 'Imprimir Hoja de Trabajo',
             'type': 'ir.actions.act_window',
@@ -78,7 +83,7 @@ class MrpProduction(models.Model):
                 'default_production_id': self.id,
                 'default_to_cut': self.to_cut,
                 'default_to_cut_rolls': self.to_cut_rolls,
-                'default_sale_type': self.sale_type,
+                'default_sale_type': sale_type[self.sale_type],
                 'default_resultant_products_ids': [(6, 0, resultant_products.ids)], 
                 'default_source_product_id': source_product.id,
                 'default_is_roll': self.is_roll,
@@ -91,7 +96,7 @@ class MrpProduction(models.Model):
                 'default_empacar_en': self.empacar_en,
                 'default_hojas_por_empaque': self.hojas_por_empaque,
                 'default_tarimas': self.tarimas,
-
+                
                 'source_size':source_size,
                 'resultant_sizes':resultant_sizes
             },

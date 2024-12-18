@@ -11,11 +11,14 @@
                         <group>
                             <field name="is_roll" invisible="1"/>
                             <!-- Variables Compartidas -->
-                            <field name="to_cut_rolls"/>
+                            <field name="to_cut_rolls" readonly="0"/>
                             <field name="sale_type"/>
+                            <field name="tarimas"/>
+                            <field name="tarimas_iguales"/>
+                            <field name="detalles_tarimas" invisible="tarimas_iguales == True" widget="many2many_tags" domain="[('id', '=', False)]"/>
+                            <field name="to_cut"/>
 
                             <!-- Variables de Rollos -->
-                            <field name="to_cut" invisible="not is_roll"/>
                             
                             <!-- Variables de Hojas -->
                             <field name="millares_vendidos" invisible="is_roll"/>
@@ -24,9 +27,6 @@
                             <field name="destino" invisible="is_roll"/>
                             <field name="empacar_en" invisible="is_roll"/>
                             <field name="hojas_por_empaque" invisible="is_roll"/>
-                            <field name="tarimas" invisible="is_roll"/>
-                            <field name="tarimas_iguales" invisible="is_roll"/>
-                            <field name="detalles_tarimas" invisible="tarimas_iguales == True" widget="many2many_tags" domain="[('id', '=', False)]"/>
                             
                         </group>
                     </group>

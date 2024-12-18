@@ -103,6 +103,9 @@ class MrpProductionWizard(models.TransientModel):
 
 
     def action_confirm(self):
+        detalles_tarima = ""
+        for i in self.production_id.detalles_tarimas:
+            detalles_tarima += i.name+", "
         data = {
             'lines':[], 
             'product_comment':self.production_id.product_comment,
@@ -111,7 +114,10 @@ class MrpProductionWizard(models.TransientModel):
             'to_cut_rolls': self.production_id.to_cut_rolls,
             'name': self.production_id.name,
             'date': self.production_id.date_start,
-            'sale_type': self.production_id.sale_type,
+            'sale_type': self.sale_type,
+            'tarimas':self.tarimas,
+            'hojas_por_empaque': detalles_tarima,
+            'to_cut': self.to_cut,
         }
         for move in self.production_id.move_raw_ids:
             if move.product_id.product_cosal in ('rollo', 'hoja'):
@@ -127,6 +133,20 @@ class MrpProductionWizard(models.TransientModel):
                     'certificado': move.product_id.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Certificado").name,
                 }
                 break
+
+        if self.production_id.workorder_ids:
+            data['work'] = []
+            for work in self.production_id.workorder_ids:
+                data['work'].append({
+                    'opetacion':work.name,
+                    'centro_trabajo':work.workcenter_id.name,
+                    'producto':work.product_id.display_name,
+                })
+            print("\n\n\n")
+            print(data['work'])
+
+
+
         if self.is_roll:
             for cut_index in self.production_line_ids:
                 cut_lines = []
@@ -149,10 +169,8 @@ class MrpProductionWizard(models.TransientModel):
 
             return self.env.ref('mrp_especification_orders.action_worksheet_roll_report').report_action([], data=data)
         else:
-            data['to_cut']= self.to_cut
-            data['tarimas']= self.tarimas
-            data['hojas_por_empaque']= self.hojas_por_empaque
-            data['tarimas']= self.tarimas
+        
+            
             data['millares_vendidos']= self.millares_vendidos
             data['medida']= self.medida
             data['kilos']= self.kilos

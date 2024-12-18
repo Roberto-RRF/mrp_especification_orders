@@ -20,6 +20,8 @@
                             </div>
                         </div>
 
+                        <h4>Componente:</h4>
+
                         <table class="table table-bordered" style="margin-top: 20px;">
                             <thead>
                                 <tr>
@@ -29,6 +31,9 @@
                                     <th>Color</th>
                                     <th>Weight (g)</th>
                                     <th>Size (cm)</th>
+                                    <th>Centro</th>
+                                    <th>Diametro</th>
+                                    <th>Certificado</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,15 +44,32 @@
                                     <td t-esc="supply['color']"/>
                                     <td t-esc="supply['weight']"/>
                                     <td t-esc="supply['size']"/>
+                                    <td t-esc="supply['centro']"/>
+                                    <td t-esc="supply['diametro']"/>
+                                    <td t-esc="supply['certificado']"/>
                                 </tr>
                             </tbody>
-                        </table>  
-
-                                              
-                        <h3>TIPO DE VENTA:   <t t-esc="sale_type"/></h3> 
-                        <h4>Empaque:   <t t-esc="empacar_en"/></h4> 
-                        <h4>Millares vendidos:   <t t-esc="millares_vendidos"/></h4> 
-                        
+                        </table>
+                        <h4> Operaciones: </h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operación </th>
+                                    <th>Centro de Trabajo</th>
+                                    <th>Producto </th>
+                                </tr>
+                            </thead>
+                            <t t-foreach="work" t-as="work_line">
+                                <tbody>
+                                    <tr>
+                                        <td t-esc="work_line['opetacion']"/>
+                                        <td t-esc="work_line['centro_trabajo']"/>
+                                        <td t-esc="work_line['producto']"/>
+                                    </tr>
+                                </tbody> 
+                            </t>
+                        </table>
+                        <h4>Empaquetado: </h4>
                         <table class="table table-bordered" style="margin-top: 20px;">
                             <thead>
                                 <tr>
@@ -67,6 +89,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <h4>TIPO DE VENTA:   <t t-esc="sale_type"/></h4> 
                         <table class="table table-bordered" style="margin-top: 20px;">
                             <thead>
                                 <tr>
@@ -106,6 +129,7 @@
             <field name="model">mrp.production</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">mrp_especification_orders.worksheet_sheet_report</field>
+            <field name="print_report_name">'Orden de trabajo - %s' % (object.name)</field>
             <field name="binding_model_id" ref="mrp.model_mrp_production"/>
             <field name="binding_view_types">form</field>
         </record>
