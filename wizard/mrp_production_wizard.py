@@ -106,6 +106,7 @@ class MrpProductionWizard(models.TransientModel):
         detalles_tarima = ""
         for i in self.production_id.detalles_tarimas:
             detalles_tarima += i.name+", "
+        
         data = {
             'lines':[], 
             'product_comment':self.production_id.product_comment,
@@ -118,6 +119,7 @@ class MrpProductionWizard(models.TransientModel):
             'tarimas':self.tarimas,
             'hojas_por_empaque': detalles_tarima,
             'to_cut': self.to_cut,
+            'client_name':self.production_id.sale_order_client,
         }
         for move in self.production_id.move_raw_ids:
             if move.product_id.product_cosal in ('rollo', 'hoja'):

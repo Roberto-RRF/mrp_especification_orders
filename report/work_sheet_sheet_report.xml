@@ -12,6 +12,7 @@
                                 <div><strong>Bodega:</strong> <t t-esc="warehouse"/> </div>
                                 <div><strong>Estatus:</strong> <t t-esc="state"/> </div>
                                 <div><strong>Rollos a Cortar:</strong> <t t-esc="to_cut_rolls"/></div>
+                                <div><strong>Cliente:</strong> <t t-esc="client_name"/></div>
                             </div>
                             <div class="col-5">
                                 <span class="text-end">
