@@ -83,7 +83,7 @@ class MrpProductionWizard(models.TransientModel):
             detail = {
                 'pos': chr(char_pos + len(resultant_sizes)),
                 'medida': f'{sum} - {source_size}',
-                'diferencia': f'{source_size - sum}',
+                'diferencia': f'{round(source_size - sum,2)}',
                 'medir_en': 'cm',
                 'kilos': 'Definir Peso',
                 'destino': 'Desperdicio',  # Generating Destino A, Destino B, etc.

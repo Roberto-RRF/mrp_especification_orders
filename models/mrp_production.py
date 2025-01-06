@@ -5,7 +5,7 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     # Variables Compartidas
-    to_cut_rolls = fields.Integer("Rollos a Cortar", compute="_compute_to_cut_rolls")
+    to_cut_rolls = fields.Float("Rollos a Cortar", compute="_compute_to_cut_rolls")
     sale_type = fields.Selection([
         ('exact', 'Cantidad Exacta'),
         ('complete', 'Rollo Completo'),
@@ -41,11 +41,15 @@ class MrpProduction(models.Model):
 
     @api.depends('move_raw_ids')
     def _compute_to_cut_rolls(self):
-        suma = 0
         for record in self:
-            for move in record.move_raw_ids:
-                suma+= move.rollos_promedio
-            record.to_cut_rolls = suma
+            suma = sum(move.rollos_promedio for move in record.move_raw_ids)
+            print(f"SUMA = {suma}")  # Debug statement
+            if suma < 1:
+                record.to_cut_rolls = 1
+                print(f"Set to_cut_rolls to 1 for record with SUMA = {suma}")  # Debug statement
+            else:
+                record.to_cut_rolls = suma
+                print(f"Set to_cut_rolls to SUMA for record with SUMA = {suma}")  # Debug statement
 
     def action_open_work_sheet_wizard(self):
         resultant_products = self.product_id | self.move_finished_ids.mapped('product_id')
@@ -73,6 +77,8 @@ class MrpProduction(models.Model):
         }
         print("\n\n\n")
         print(sale_type[self.sale_type])
+        print("\n\n\nVALOR PASADO AL WIZARD")
+        print(self.to_cut_rolls)
         return {    
             'name': 'Imprimir Hoja de Trabajo',
             'type': 'ir.actions.act_window',
@@ -96,7 +102,6 @@ class MrpProduction(models.Model):
                 'default_empacar_en': self.empacar_en,
                 'default_hojas_por_empaque': self.hojas_por_empaque,
                 'default_tarimas': self.tarimas,
-                
                 'source_size':source_size,
                 'resultant_sizes':resultant_sizes
             },
