@@ -19,8 +19,8 @@ class MrpProduction(models.Model):
     medida = fields.Char("Medida (cms)")
     kilos = fields.Char("Kilos")
     destino = fields.Char("Destino")
-    empacar_en = fields.Char("Empacar en")
-    hojas_por_empaque = fields.Char("Hojas por empaque")
+    empacar_en = fields.Char("Empacar a")
+    hojas_por_empaque = fields.Char("Empaque / Separador.")
     tarimas = fields.Char("Tarimas")
     
     tarimas_iguales = fields.Boolean("Todas las tarimas son iguales", default=True)

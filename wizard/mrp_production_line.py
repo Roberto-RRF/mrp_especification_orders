@@ -18,7 +18,7 @@ class MrpProductionLine(models.TransientModel):
     pos = fields.Char("POS")
     medida = fields.Char("Medida (cms)")
     diferencia = fields.Char("Diferencia (cms)")
-    medir_en = fields.Char("Medir En")    
+    medir_en = fields.Char("Medir a")    
     kilos = fields.Char("Kilos")    
     destino = fields.Char("Destino")
 
