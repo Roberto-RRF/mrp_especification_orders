@@ -20,7 +20,7 @@ class MrpProduction(models.Model):
     kilos = fields.Char("Kilos")
     destino = fields.Char("Destino")
     empacar_en = fields.Char("Empacar a")
-    hojas_por_empaque = fields.Char("Empaque / Separador.")
+    hojas_por_empaque = fields.Char("Empaque / Separador")
     tarimas = fields.Char("Tarimas")
     
     tarimas_iguales = fields.Boolean("Todas las tarimas son iguales", default=True)
@@ -66,7 +66,7 @@ class MrpProduction(models.Model):
         resultant_sizes = []
         for product in resultant_products:
             # Filter the attribute values for "Ancho cm"
-            ancho_cm_values = product.product_template_attribute_value_i.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Centro").nameds.filtered(
+            ancho_cm_values = product.product_template_attribute_value_ids.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Centro").nameds.filtered(
                 lambda a: a.attribute_id.name == "Ancho cm"
             )
             # Append the names of the filtered values to resultant_sizes

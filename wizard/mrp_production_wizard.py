@@ -23,7 +23,7 @@ class MrpProductionWizard(models.TransientModel):
     kilos = fields.Char("Kilos")
     destino = fields.Char("Destino")
     empacar_en = fields.Char("Empacar a")
-    hojas_por_empaque = fields.Char("Empaque / Separador.")
+    hojas_por_empaque = fields.Char("Empaque / Separador")
     tarimas = fields.Char("Tarimas")
 
     @api.model
