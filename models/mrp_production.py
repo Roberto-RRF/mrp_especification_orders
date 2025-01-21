@@ -66,7 +66,7 @@ class MrpProduction(models.Model):
         resultant_sizes = []
         for product in resultant_products:
             # Filter the attribute values for "Ancho cm"
-            ancho_cm_values = product.product_template_attribute_value_ids.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Centro").nameds.filtered(
+            ancho_cm_values = product.product_template_attribute_value_ids.filtered(
                 lambda a: a.attribute_id.name == "Ancho cm"
             )
             # Append the names of the filtered values to resultant_sizes
