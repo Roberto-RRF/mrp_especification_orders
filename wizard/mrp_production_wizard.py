@@ -10,6 +10,8 @@ class MrpProductionWizard(models.TransientModel):
     sale_type = fields.Char("Tipo de Venta")
     centro = fields.Char("Centro")
     diametro = fields.Char("Diametro")
+    refil = fields.Float("Refil")
+
 
     production_id = fields.Many2one('mrp.production', string='Orden de Producción')
     resultant_products_ids = fields.Many2many('product.product', string="Resultant Products", readonly=True)

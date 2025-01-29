@@ -8,20 +8,21 @@
                 <group>
                     <field name="is_roll" invisible="1"/>
                     <!-- Variables Compartidas -->
-                    <field name="to_cut_rolls"/>
-                    <field name="sale_type"/>
+                    <field name="to_cut_rolls" readonly="1"/>
+                    <field name="sale_type" readonly="1"/>
+                    <field name="refil" readonly="1"/>
 
                     <!-- Variables de Rollos -->
-                    <field name="to_cut" invisible="not is_roll"/>
+                    <field name="to_cut" invisible="not is_roll" readonly="1"/>
                     
                     <!-- Variables de Hojas -->
-                    <field name="millares_vendidos" invisible="is_roll"/>
-                    <field name="medida" invisible="is_roll"/>
-                    <field name="kilos" invisible="is_roll"/>
-                    <field name="destino" invisible="is_roll"/>
-                    <field name="empacar_en" invisible="is_roll"/>
-                    <field name="hojas_por_empaque" invisible="is_roll"/>
-                    <field name="tarimas" invisible="is_roll"/>
+                    <field name="millares_vendidos" invisible="is_roll" readonly="1"/>
+                    <field name="medida" invisible="is_roll" readonly="1"/>
+                    <field name="kilos" invisible="is_roll" readonly="1"/>
+                    <field name="destino" invisible="is_roll" readonly="1"/>
+                    <field name="empacar_en" invisible="is_roll" readonly="1"/>
+                    <field name="hojas_por_empaque" invisible="is_roll" readonly="1"/>
+                    <field name="tarimas" invisible="is_roll" readonly="1"/>
 
 
                 </group>
@@ -29,7 +30,7 @@
                     <page string="Productos Resultantes" invisible="not is_roll">
                         <field name="resultant_products_ids">
                             <tree string="Lines" create="0" editable="false" readonly="1">
-                                <field name="display_name" string="Producto"/>
+                                <field name="display_name" string="Producto" />
                             </tree>
                         </field>
                     </page>

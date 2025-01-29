@@ -10,7 +10,7 @@ class MrpProduction(models.Model):
         ('exact', 'Cantidad Exacta'),
         ('complete', 'Rollo Completo'),
     ], string ="Tipo de Venta", default="complete")
-    
+    refil = fields.Float("Refil")
     # Variables de Rollo
     to_cut = fields.Integer("Numero de Pasadas")
 
@@ -22,6 +22,7 @@ class MrpProduction(models.Model):
     empacar_en = fields.Char("Empacar a")
     hojas_por_empaque = fields.Char("Empaque / Separador")
     tarimas = fields.Char("Tarimas")
+
     
     tarimas_iguales = fields.Boolean("Todas las tarimas son iguales", default=True)
     detalles_tarimas = fields.Many2many(
@@ -65,11 +66,9 @@ class MrpProduction(models.Model):
         source_size = source_product.product_template_attribute_value_ids.filtered(lambda a: a.attribute_id.name == "Ancho cm").name
         resultant_sizes = []
         for product in resultant_products:
-            # Filter the attribute values for "Ancho cm"
             ancho_cm_values = product.product_template_attribute_value_ids.filtered(
                 lambda a: a.attribute_id.name == "Ancho cm"
             )
-            # Append the names of the filtered values to resultant_sizes
             resultant_sizes.extend(ancho_cm_values.mapped('name'))
         sale_type = {
             'exact': 'Cantidad Exacta',
@@ -99,6 +98,7 @@ class MrpProduction(models.Model):
                 'default_medida': self.medida,
                 'default_kilos': self.kilos,
                 'default_destino': self.destino,
+                'default_refil': self.refil,
                 'default_empacar_en': self.empacar_en,
                 'default_hojas_por_empaque': self.hojas_por_empaque,
                 'default_tarimas': self.tarimas,

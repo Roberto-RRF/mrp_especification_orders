@@ -12,19 +12,20 @@
                             <field name="is_roll" invisible="1"/>
                             <!-- Variables Compartidas -->
                             <field name="to_cut_rolls" readonly="0"/>
-                            <field name="sale_type"/>
+                            <field name="sale_type" readonly="1"/>
                             <field name="tarimas"/>
                             <field name="tarimas_iguales"/>
                             <field name="detalles_tarimas" invisible="tarimas_iguales == True" widget="many2many_tags" domain="[('id', '=', False)]"/>
                             <field name="to_cut"/>
+                            <field name="refil" readonly="1"/>
 
                             <!-- Variables de Rollos -->
                             
                             <!-- Variables de Hojas -->
-                            <field name="millares_vendidos" invisible="is_roll"/>
-                            <field name="medida" invisible="is_roll"/>
-                            <field name="kilos" invisible="is_roll"/>
-                            <field name="destino" invisible="is_roll"/>
+                            <field name="millares_vendidos" invisible="is_roll" readonly="1"/>
+                            <field name="medida" invisible="is_roll" readonly="1" />
+                            <field name="kilos" invisible="is_roll" readonly="1"/>
+                            <field name="destino" invisible="is_roll" readonly="1"/>
                             <field name="empacar_en" invisible="is_roll"/>
                             <field name="hojas_por_empaque" invisible="is_roll"/>
                             
