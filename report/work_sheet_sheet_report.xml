@@ -109,7 +109,6 @@
                                     <td t-esc="destino"/>                                    
                                     <td t-esc="empacar_en"/>
                                     <td t-esc="hojas_por_empaque"/>
-                                    <td t-esc="millares_vendidos"/>
                                     <td t-esc="refil"/>
                                 </tr>
                             </tbody>
