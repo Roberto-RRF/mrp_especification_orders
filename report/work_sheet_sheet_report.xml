@@ -83,7 +83,7 @@
                                     <td t-esc="to_cut"/>
                                     <td t-esc="to_cut_rolls"/>
                                     <td t-esc="tarimas"/>
-                                    <td t-esc="hojas_por_empaque"/>
+                                    <td t-esc="detalles_tarima"/>
                                 </tr>
                             </tbody>
                         </table>

@@ -119,7 +119,7 @@ class MrpProductionWizard(models.TransientModel):
             'date': self.production_id.date_start,
             'sale_type': self.sale_type,
             'tarimas':self.tarimas,
-            'hojas_por_empaque': detalles_tarima,
+            'detalles_tarima': detalles_tarima,
             'to_cut': self.to_cut,
             'client_name':self.production_id.sale_order_client,
         }
@@ -181,4 +181,5 @@ class MrpProductionWizard(models.TransientModel):
             data['destino']= self.destino
             data['empacar_en']= self.empacar_en
             data['refil'] = self.refil
+            data['hojas_por_empaque'] = self.hojas_por_empaque
             return self.env.ref('mrp_especification_orders.action_worksheet_sheet_report').report_action([], data=data)
