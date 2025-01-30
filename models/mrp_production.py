@@ -44,7 +44,6 @@ class MrpProduction(models.Model):
     def _compute_to_cut_rolls(self):
         for record in self:
             suma = sum(move.rollos_promedio for move in record.move_raw_ids)
-            print(f"SUMA = {suma}")  # Debug statement
             if suma < 1:
                 record.to_cut_rolls = 1
                 print(f"Set to_cut_rolls to 1 for record with SUMA = {suma}")  # Debug statement
@@ -74,10 +73,6 @@ class MrpProduction(models.Model):
             'exact': 'Cantidad Exacta',
             'complete': 'Rollo Completo',
         }
-        print("\n\n\n")
-        print(sale_type[self.sale_type])
-        print("\n\n\nVALOR PASADO AL WIZARD")
-        print(self.to_cut_rolls)
         return {    
             'name': 'Imprimir Hoja de Trabajo',
             'type': 'ir.actions.act_window',
