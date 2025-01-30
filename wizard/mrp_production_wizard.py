@@ -180,4 +180,5 @@ class MrpProductionWizard(models.TransientModel):
             data['kilos']= self.kilos
             data['destino']= self.destino
             data['empacar_en']= self.empacar_en
+            data['refil'] = self.refil
             return self.env.ref('mrp_especification_orders.action_worksheet_sheet_report').report_action([], data=data)
