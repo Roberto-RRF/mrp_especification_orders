@@ -89,7 +89,7 @@ class MrpProduction(models.Model):
                 'default_tarimas': self.tarimas,
                 'source_size':source_size,
                 'resultant_sizes':resultant_sizes,
-                'peso_promedio':source_product.peso_promedio,
+                'resultant_sizes':resultant_sizes
             },
         }
     
