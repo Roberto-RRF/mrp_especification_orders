@@ -5,7 +5,7 @@ class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
     # Variables Compartidas
-    to_cut_rolls = fields.Float("Rollos a Cortar", compute="_compute_to_cut_rolls")
+    to_cut_rolls = fields.Float("Rollos a Cortar")
     sale_type = fields.Selection([
         ('exact', 'Cantidad Exacta'),
         ('complete', 'Rollo Completo'),
@@ -40,16 +40,6 @@ class MrpProduction(models.Model):
             else:
                 record.is_roll = False
 
-    @api.depends('move_raw_ids')
-    def _compute_to_cut_rolls(self):
-        for record in self:
-            suma = sum(move.rollos_promedio for move in record.move_raw_ids)
-            if suma < 1:
-                record.to_cut_rolls = 1
-                print(f"Set to_cut_rolls to 1 for record with SUMA = {suma}")  # Debug statement
-            else:
-                record.to_cut_rolls = suma
-                print(f"Set to_cut_rolls to SUMA for record with SUMA = {suma}")  # Debug statement
 
     def action_open_work_sheet_wizard(self):
         resultant_products = self.product_id | self.move_finished_ids.mapped('product_id')
