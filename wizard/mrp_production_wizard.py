@@ -40,6 +40,7 @@ class MrpProductionWizard(models.TransientModel):
 
         centro = context.get('default_centro', '')
         diametro = context.get('default_diametro', '')
+        peso_promedio = float(context.get('peso_promedio', ''))
 
         source_size = float(context.get('source_size', ''))
         resultant_sizes = context.get('resultant_sizes', '')
@@ -55,6 +56,10 @@ class MrpProductionWizard(models.TransientModel):
 
 
         # Prepare the production lines
+        print("To cut: "+str(to_cut))
+        print("Resultant Sizes: "+str(resultant_sizes[0]))
+        print("Peso Promedio: "+str(peso_promedio))
+        peso = round(peso_promedio/(to_cut*resultant_sizes[0]),2)
         production_lines = []
         for i in range(to_cut):
             # Create the base production line
@@ -64,33 +69,34 @@ class MrpProductionWizard(models.TransientModel):
                 'diametro': diametro,
                 'wizard_id': self.id,  
             }
-
             # Prepare the detail lines for the production line
             line_details = []
             sum = 0
             i = 0
             char_pos = 65
-
             for i, size in enumerate(resultant_sizes):
+                div = int(source_size // size)
+                for j in range(0,div):
+                    detail = {
+                        'pos': chr(char_pos + j),
+                        'medida': f'{sum} - {size + sum}',
+                        'diferencia': f'{size}',
+                        'medir_en': 'cm',
+                        'kilos': peso,
+                        'destino': 'Cliente',
+                    }
+                    line_details.append((0, 0, detail))
+                    sum += size
+            if source_size != sum:
                 detail = {
-                    'pos': chr(char_pos + i),
-                    'medida': f'{sum} - {size + sum}',
-                    'diferencia': f'{size}',
+                    'pos': chr(char_pos + len(resultant_sizes)),
+                    'medida': f'{sum} - {source_size}',
+                    'diferencia': f'{source_size - sum}',
                     'medir_en': 'cm',
-                    'kilos': 'Definir Peso',
-                    'destino': 'Cliente',
+                    'kilos': peso,
+                    'destino': 'Desperdicio',  # Generating Destino A, Destino B, etc.
                 }
                 line_details.append((0, 0, detail))
-                sum += size
-            detail = {
-                'pos': chr(char_pos + len(resultant_sizes)),
-                'medida': f'{sum} - {source_size}',
-                'diferencia': f'{round(source_size - sum,2)}',
-                'medir_en': 'cm',
-                'kilos': 'Definir Peso',
-                'destino': 'Desperdicio',  # Generating Destino A, Destino B, etc.
-            }
-            line_details.append((0, 0, detail))
             # Add detail lines to the production line
             production_line['lines_details'] = line_details
 

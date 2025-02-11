@@ -98,7 +98,8 @@ class MrpProduction(models.Model):
                 'default_hojas_por_empaque': self.hojas_por_empaque,
                 'default_tarimas': self.tarimas,
                 'source_size':source_size,
-                'resultant_sizes':resultant_sizes
+                'resultant_sizes':resultant_sizes,
+                'peso_promedio':source_product.peso_promedio,
             },
         }
     
